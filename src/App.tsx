@@ -28,13 +28,16 @@ const App: React.FC = () => {
   // function component returns jsx 
   return (
     <div>
-      <p className='test'>
-      {ReactDescriptions}
-      </p>  
+   <p className='test'>
+  {ReactDescriptions.map(description => (
+    <span key={description}>{description}</span>
+  ))}
+</p>
       {getRandomInt(9)}
       <NewToDo onAddToDo={todoHandler} />
       <TodoList items={todos} onDeleteTodo={todoDeleteHandler} />
     </div>
+  
   )
 }
 // Working with props and types for props
