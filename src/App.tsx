@@ -3,13 +3,6 @@ import TodoList from './pages/TodoList';
 import NewToDo from './pages/NewToDo';
 import { ToDo } from './todo.model';
 
-
-const ReactDescriptions: string[] = ['Fundamentals', 'Curcial', 'Core'];
-
-function getRandomInt(max: any) {
-  return Math.floor(Math.random() * (max + 1));
-}
-
 const App: React.FC = () => {
   // const todos = [{ id: 'id1', text: 'Finish the course' }];
   const [todos, setTodos] = useState<ToDo[]>( [])
@@ -25,15 +18,9 @@ const App: React.FC = () => {
   }
 
 
-  // function component returns jsx 
+  // function component returns jsx
   return (
     <div>
-   <p className='test'>
-  {ReactDescriptions.map(description => (
-    <span key={description}>{description}</span>
-  ))}
-</p>
-      {getRandomInt(9)}
       <NewToDo onAddToDo={todoHandler} />
       <TodoList items={todos} onDeleteTodo={todoDeleteHandler} />
     </div>
@@ -43,3 +30,13 @@ const App: React.FC = () => {
 // Working with props and types for props
 
 export default App;
+// import CourseGoal from "./pages/CourseGoal"
+// export default function App() {
+//   return (
+//     <main>
+//       <CourseGoal title="Learn React" >
+//         <p>Learn it from the ground up.</p>
+//       </CourseGoal>
+//     </main>
+//   );
+// }
