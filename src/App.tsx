@@ -30,44 +30,73 @@
 // // Working with props and types for props
 
 // export default App;
-import CourseGoal from './pages/CourseGoal';
+import CourseGoal from './components/CourseGoal';
 import Header from "./pages/HeaderField";
 import goalsImg from './assets/goal.jpg';
 import { useState } from "react";
 
-type CourseGoal = {
+type CourseGoalType = {
   title: string;
   description: string;
   id: number;
 }
+const defaultGoals: CourseGoalType[] = [
+  {
+    id: 1,
+    title: 'Test1',
+    description:'Test Description'
+  }
+]
+
 export default function App() {
-  const [goals, setGoals] = useState<CourseGoal[]>([]);
-  
+  const [goals, setGoals] = useState<CourseGoalType[]>(defaultGoals);
+  const [newGoalTitle, setNewGoalTitle] = useState("");
+  const [newGoalDescription, setNewGoalDescription] = useState("");
   function handleAddGoal() {
-    setGoals(prevGoals => {
-      const newGoal: CourseGoal = {
+    if (newGoalTitle !== '' && newGoalDescription !== '')
+    {
+      setGoals(prevGoals => {
+      const newGoal: CourseGoalType = {
         id: Math.random(),
-        title: 'Test React',
-        description: 'Learn all the basics in depth!'
+        title: newGoalTitle,
+        description: newGoalDescription
       };
-      return [...prevGoals,newGoal]
-     });
+      return [newGoal, ...prevGoals ];
+    });
+    }
+    else 
+    {
+      alert('Input title and description first')
+    }
+
+    setNewGoalTitle('');
+    setNewGoalDescription('');
+  }
+  function handleDeleteGoal(goalId: number) {
+        setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== goalId));
+
   }
   return (
     <main>
       <Header image={{ src: goalsImg, alt: 'A list of goals'}}>
         <h1> Your course Goals</h1>
+        <section>
+          <label>Title:</label>
+          <input type="text" id="description" value={newGoalTitle} onChange={(event) => setNewGoalTitle(event.target.value)} />
+          <label>Description:</label>
+          <input type="text" id="description" value={newGoalDescription} onChange={(event) => setNewGoalDescription(event.target.value)}/>
+        </section>
+        <button onClick={handleAddGoal}> Add Goal</button>
       </Header>
       <ul>
         {goals.map((goal) => (
           <li key={goal.id}>
-         <CourseGoal title={ goal.title}>
+            <CourseGoal title={goal.title} handleDelete={handleDeleteGoal} id={goal.id} >
           <p>{goal.description}</p>
           </CourseGoal> 
           </li>
         ))}
 </ul>
-
     </main>
   );
 }
