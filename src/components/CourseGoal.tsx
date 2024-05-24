@@ -1,5 +1,8 @@
-import {  type ReactNode } from "react";
-import React from "react";
+import {  useRef, type ReactNode } from "react";
+
+interface InputRef {
+  focus: () => void;
+}
 
 interface CourseGoalProps {
   title: string;
@@ -12,11 +15,13 @@ export default function CourseGoal({ title, id, handleDelete,children }: CourseG
   
   const handleDeleteFun = () => {
     handleDelete(id);
-}
+  }
+  const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <article>
       <div>
+        <input ref={inputRef}/>
         <h2>{ title }</h2>
           {children}
       </div>
