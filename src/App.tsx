@@ -2,6 +2,7 @@
 import CourseGoal from './components/CourseGoal';
 import Header from "./pages/HeaderField";
 import goalsImg from './assets/goal.jpg';
+import Counter from './pages/Counter'
 import { useState } from "react";
 
 type CourseGoalType = {
@@ -64,7 +65,8 @@ export default function App() {
           </CourseGoal> 
           </li>
         ))}
-</ul>
+      </ul>
+      <Counter/>
     </main>
   );
 }
