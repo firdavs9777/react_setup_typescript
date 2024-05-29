@@ -28,8 +28,8 @@ const products: Product[] = [
     imageUrl: product1Image,
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
-    numReview: 10,
+    rating: 1.5,
+    numReview: 20,
   },
   {
     id: 2,
@@ -39,8 +39,8 @@ const products: Product[] = [
     imageUrl: product2Image,
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
-    numReview: 10,
+    rating: 2.5,
+    numReview: 30,
   },
   {
     id: 3,
@@ -50,8 +50,8 @@ const products: Product[] = [
     imageUrl: product3Image,
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
-    numReview: 10,
+    rating: 0.5,
+    numReview: 40,
   },
     {
     id: 4,
@@ -61,8 +61,8 @@ const products: Product[] = [
       imageUrl: product4Image,
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
-    numReview: 10,
+    rating: 3.5,
+    numReview: 50,
   },
   {
     id: 5,
@@ -72,8 +72,8 @@ const products: Product[] = [
     imageUrl: product5Image,
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
-    numReview: 10,
+    rating: 1.5,
+    numReview: 60,
   },
   {
     id: 6,
@@ -83,7 +83,7 @@ const products: Product[] = [
     imageUrl: product6Image, 
      brand: 'Brand A',
     countInStock: 5,
-    rating: 4.5,
+    rating: 2.5,
     numReview: 10,
   }
 ];

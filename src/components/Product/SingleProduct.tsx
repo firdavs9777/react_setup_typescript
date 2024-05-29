@@ -1,7 +1,8 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Product } from './ProductList'
 import { Link } from "react-router-dom";
+import Rating from "../Rating";
 
 
 const SingleProduct: React.FC<Product> = ({id,name,description,price, imageUrl,brand,rating, countInStock,numReview}) => {
@@ -16,9 +17,15 @@ const SingleProduct: React.FC<Product> = ({id,name,description,price, imageUrl,b
         {/* <Card.Text><strong>Brand:</strong> {brand}</Card.Text>
         <Card.Text>{description}</Card.Text> */}
         <Card.Text as="h3"><strong>Price:</strong> ${parseFloat(price).toFixed(2)}</Card.Text>
-        {/* <Card.Text><strong>In Stock:</strong> {countInStock}</Card.Text>
-        <Card.Text><strong>Rating:</strong> {rating} ({numReview} reviews)</Card.Text>
-        <Button variant="primary" disabled={countInStock === 0}>Add to Cart</Button> */}
+        <Card.Text><strong>In Stock:</strong> {countInStock}</Card.Text>
+ <Card.Text as='div'>
+          <Rating
+            value={rating}
+              text={`${numReview} reviews`}
+              color="#f8e825"
+          />
+        </Card.Text>
+        <Button variant="primary" disabled={countInStock === 0}>Add to Cart</Button>
       </Link>
       </Card.Body>
     </Card>
