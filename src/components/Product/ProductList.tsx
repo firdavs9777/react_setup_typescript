@@ -24,7 +24,7 @@ const products: Product[] = [
     id: 1,
     name: 'Airpods Pro',
     description: 'Best Airpods in the world.',
-    price: '$200.00',
+    price: '200.00',
     imageUrl: product1Image,
      brand: 'Brand A',
     countInStock: 5,
@@ -35,7 +35,7 @@ const products: Product[] = [
     id: 2,
     name: 'Alexa',
     description: 'Alexa is here on sale',
-    price: '$120.00',
+    price: '120.00',
     imageUrl: product2Image,
      brand: 'Brand A',
     countInStock: 5,
@@ -46,7 +46,7 @@ const products: Product[] = [
     id: 3,
     name: 'Professional Camera',
     description: 'Pro Camera is only on our website',
-    price: '$500.00',
+    price: '500.00',
     imageUrl: product3Image,
      brand: 'Brand A',
     countInStock: 5,
@@ -57,7 +57,7 @@ const products: Product[] = [
     id: 4,
     name: 'Mouse',
     description: 'Easy to use with any keyboard.',
-    price: '$30.00',
+    price: '30.00',
       imageUrl: product4Image,
      brand: 'Brand A',
     countInStock: 5,
@@ -68,7 +68,7 @@ const products: Product[] = [
     id: 5,
     name: 'Phone',
     description: 'New Phone is on Sale',
-    price: '$1220.00',
+    price: '1220.00',
     imageUrl: product5Image,
      brand: 'Brand A',
     countInStock: 5,
@@ -79,7 +79,7 @@ const products: Product[] = [
     id: 6,
     name: 'Playstation',
     description: 'Try Playstation at home and enjoy your self time.',
-    price: '$30.00',
+    price: '30.00',
     imageUrl: product6Image, 
      brand: 'Brand A',
     countInStock: 5,
@@ -94,7 +94,7 @@ const ProductList = () => {
       <h1>Latest Products</h1>
       <Row className="mt-4">
         {products.map((product) => (
-          <Col md={4} key={product.id} className="mb-4">
+          <Col md={6} sm={12} lg={4} xl={3} key={product.id} className="mb-4">
             <SingleProduct
               id={product.id}
               name={product.name} 
