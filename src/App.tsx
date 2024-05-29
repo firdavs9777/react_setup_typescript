@@ -74,13 +74,14 @@
 import Footer from './components/Footer';
 import Header from './components/Header'
 import { Container } from 'react-bootstrap';
+import ProductList from './components/Product/ProductList';
 const App = () => {
   return (
     <>
       <Header />
       <main className='py-3'>
         <Container>
-  <h1>Welcome to ShopSmart</h1>
+           <ProductList/>
         </Container>
       </main>
       <Footer/>

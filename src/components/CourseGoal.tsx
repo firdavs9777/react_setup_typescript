@@ -1,8 +1,8 @@
 import {  useRef, type ReactNode } from "react";
 
-interface InputRef {
-  focus: () => void;
-}
+// interface InputRef {
+//   focus: () => void;
+// }
 
 interface CourseGoalProps {
   title: string;
@@ -10,9 +10,7 @@ interface CourseGoalProps {
   handleDelete: (goal: number) => void;
   children: ReactNode;
 }
-
 export default function CourseGoal({ title, id, handleDelete,children }: CourseGoalProps) {
-  
   const handleDeleteFun = () => {
     handleDelete(id);
   }
