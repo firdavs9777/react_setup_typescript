@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import {products} from './ProductList'; // Assuming ProductList exports an array of products
-import { ProductType } from "./ProductList";
+import {products} from './ProductData'; // Assuming ProductList exports an array of products
+import { ProductType } from "./ProductData";
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import Rating from "../Rating";
 

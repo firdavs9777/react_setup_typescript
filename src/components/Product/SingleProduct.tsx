@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { ProductType } from './ProductList'
+import { ProductType } from './ProductData'
 import { Link } from "react-router-dom";
 import Rating from "../Rating";
 

@@ -8,6 +8,7 @@ import store from './store';
 import './assets/styles/bootstrap.custom.css';
 import router from './router/router';
 import { RouterProvider } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,3 +20,4 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+reportWebVitals();
