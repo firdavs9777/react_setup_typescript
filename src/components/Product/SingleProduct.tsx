@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import { Product } from './ProductList'
 import { Link } from "react-router-dom";
-import Rating from "../Rating";
+import Rating from "../Rating/Rating";
 
 
 const SingleProduct: React.FC<Product> = ({id,name,description,price, imageUrl,brand,rating, countInStock,numReview}) => {
