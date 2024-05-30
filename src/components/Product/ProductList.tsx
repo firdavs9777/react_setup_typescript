@@ -3,25 +3,21 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import SingleProduct from './SingleProduct';
-import { products } from './ProductData';
-import { ProductType } from './ProductData';
+import { products, ProductType } from './ProductData';
 const ProductList = () => {
-  // const [products, setProducts] = useState<ProductType[]>([]);
-
-
-  //   useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await axios.get<{ data: ProductType[] }>('http://localhost:5001/api/v1/products');
-  //       setProducts(response.data.data);
-  //       alert(JSON.stringify(response.data.data));
-  //     } catch (error) {
-  //       console.error('Error fetching products:', error);
-  //     }
-  //   };
-
-  //   fetchProducts();
-  // }, []);
+  const [products, setProducts] = useState<ProductType[]>([]);
+    useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get<ProductType[]>('http://localhost:5001/api/v1/products');
+        setProducts(response.data);
+      } catch (error) {
+        alert(error)
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
   return (
     <Container>
       <h1>Latest Products</h1>
