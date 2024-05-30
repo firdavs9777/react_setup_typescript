@@ -7,7 +7,7 @@ import product3Image from '../../assets/images/camera.jpg';
 import product4Image from '../../assets/images/mouse.jpg'
 import product5Image from '../../assets/images/phone.jpg'
 import product6Image from '../../assets/images/playstation.jpg'
-export  interface Product {
+export  interface ProductType {
   id: number;
   name: string;
   description: string;
@@ -19,7 +19,7 @@ export  interface Product {
   numReview: number;
 }
 
-const products: Product[] = [
+export const products: ProductType[] = [
   {
     id: 1,
     name: 'Airpods Pro',
@@ -27,7 +27,7 @@ const products: Product[] = [
     price: '200.00',
     imageUrl: product1Image,
      brand: 'Brand A',
-    countInStock: 5,
+    countInStock: 0,
     rating: 1.5,
     numReview: 20,
   },

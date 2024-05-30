@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { Product } from './ProductList'
+import { ProductType } from './ProductList'
 import { Link } from "react-router-dom";
 import Rating from "../Rating";
 
 
-const SingleProduct: React.FC<Product> = ({id,name,description,price, imageUrl,brand,rating, countInStock,numReview}) => {
+const SingleProduct: React.FC<ProductType> = ({id,name,description,price, imageUrl,brand,rating, countInStock,numReview}) => {
   return (
     <Card className="my-3 p-3 rounded">
       <Link to={`/product/${id}`}>
