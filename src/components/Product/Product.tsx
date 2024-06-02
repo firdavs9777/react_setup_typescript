@@ -1,21 +1,23 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import {products} from './ProductData'; // Assuming ProductList exports an array of products
-import { ProductType } from "./ProductData";
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
-import Rating from "../Rating";
-
+import Rating from "../Rating/Rating";
+import { useGetProductDetailsQuery } from "../../slices/productsApiSlice";
 
 const ProductScreen: React.FC = () => {
-  const { id: productId } = useParams();
-  const numericProductId = Number(productId);
-  const product: ProductType | undefined = products.find((p: ProductType) => p.id === numericProductId );
-  console.log(product)
-  
+  const { id:productId } = useParams()
+  console.log(useParams())
+  const ProductId = (productId  as string);
+  console.log(ProductId);
+  const { data: product, isLoading, error } = useGetProductDetailsQuery(ProductId);
   return (
     <>
       <h1>Product Detail Page</h1>
-      {product ? (
+      {
+        isLoading ? (
+          <p>Loading</p>
+        )
+      :product ? (
         <div>
           <Link className="btn btn-light my03" to='/'>
         Go Back
@@ -67,7 +69,8 @@ const ProductScreen: React.FC = () => {
         </div>
       ) : (
         <p>Product not found.</p>
-      )}
+      )
+    }
     </>
   );
 };
