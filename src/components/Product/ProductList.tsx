@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 import { Container, Row, Col } from 'react-bootstrap';
 import SingleProduct from './SingleProduct';
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
