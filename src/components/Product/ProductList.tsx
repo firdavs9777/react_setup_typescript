@@ -3,6 +3,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import SingleProduct from './SingleProduct';
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
 import { ProductType, ResponseType } from './ProductData';
+import Loader from '../Loader';
+import Message from '../Message';
+
 
 const ProductList = () => {
   const { data, isLoading, error } = useGetProductsQuery({});
@@ -12,7 +15,9 @@ const ProductList = () => {
       <h1>Latest Products</h1>
       <Row className="mt-4">
         {isLoading ? (
-          <p>Loading...</p>
+          <Loader/>
+        ) : error ? (
+        <Message variant='danger'>Error Occured</Message>
         ) : products ? (
           products.data.map((product: ProductType) => (
             <Col md={6} sm={12} lg={4} xl={3} key={product._id} className="mb-4">

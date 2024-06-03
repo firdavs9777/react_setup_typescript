@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import Rating from "../Rating/Rating";
 import { useGetProductDetailsQuery } from "../../slices/productsApiSlice";
+import Loader from "../Loader";
+import Message from "../Message";
 
 export interface ProductResponseType {
   data: {
@@ -44,8 +46,10 @@ const ProductScreen: React.FC = () => {
       <h1>Product Detail Page</h1>
       {
         isLoading ? (
-          <p>Loading</p>
-        ) :product.data ?  (
+          <Loader/>
+        ) : error ? (
+                <Message variant='danger'>Error Occured</Message>
+        ): product.data ? (
         <div>
           <Link className="btn btn-light my03" to='/'>
         Go Back
