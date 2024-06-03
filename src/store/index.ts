@@ -2,8 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../slices/apiSlice';
 
+import cartSlice from '../slices/cartSlice';
 const rootReducer = configureStore({
-  reducer: {[apiSlice.reducerPath]: apiSlice.reducer},
+  reducer: {
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    cart: cartSlice.reducer,
+
+  },
   middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true
 });
