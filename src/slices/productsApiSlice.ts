@@ -1,10 +1,9 @@
 import { PRODUCTS_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
-import { ProductType } from "../components/Product/ProductData";
 
 
 export const productsApiSlice  = apiSlice.injectEndpoints({
-    endpoints: (builder)=> ({
+    endpoints: (builder: any)=> ({
         getProducts: builder.query({
             query: () => ({
                 url: PRODUCTS_URL,

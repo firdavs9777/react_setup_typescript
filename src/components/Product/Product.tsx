@@ -4,41 +4,69 @@ import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import Rating from "../Rating/Rating";
 import { useGetProductDetailsQuery } from "../../slices/productsApiSlice";
 
+export interface ProductResponseType {
+  data: {
+    _id: string;
+    user: string;
+    name: string;
+    image: string;
+    brand: string;
+    category: string;
+    description: string;
+    rating: number;
+    numReviews: number;
+    price: number;
+    countInStock: number;
+    reviews: any[]; // Define this more specifically if you know the structure of reviews
+    __v: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+  message: string;
+  isLoading: boolean;
+  error: string;
+}
+// export interface ResponseType {
+//   count: number;
+//   data: ProductType;
+//   message: string;
+//   isLoading: boolean;
+//   error: boolean;
+// }
 const ProductScreen: React.FC = () => {
   const { id:productId } = useParams()
-  console.log(useParams())
-  const ProductId = (productId  as string);
-  console.log(ProductId);
-  const { data: product, isLoading, error } = useGetProductDetailsQuery(ProductId);
+  const ProductId = (productId as string);
+  const { data, isLoading, error } = useGetProductDetailsQuery(ProductId);
+  const product: ProductResponseType = data as ProductResponseType;
+
   return (
     <>
       <h1>Product Detail Page</h1>
       {
         isLoading ? (
           <p>Loading</p>
-        )
-      :product ? (
+        ) :product.data ?  (
         <div>
           <Link className="btn btn-light my03" to='/'>
         Go Back
       </Link>
       <Row>
         <Col md={5}>
-     <Card.Img variant="top" src={product.imageUrl} alt={product.name} />
+     <Card.Img variant="top" src={product.data.image} alt={product.data.name} />
         </Col>
         <Col md={4}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>{ product.name}</h2>
+              <h2>{ product.data.name}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Rating value={product.rating} text={`${product.numReview}`} color="#f8e825" />
+                  <Rating value={product.data.rating} text={`${product.data.numReviews}`} color="#f8e825" />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Price: ${product.price}
+                  Price: ${product.data.price}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Description: {product.description}
+                  Description: {product.data.description}
                 </ListGroup.Item>          
           </ListGroup>
         </Col>
@@ -48,17 +76,17 @@ const ProductScreen: React.FC = () => {
                   <ListGroup.Item>
                     <Row>
                       <Col>Price:</Col>
-                      <Col><strong>${ product.price}</strong></Col>
+                      <Col><strong>${product.data.price}</strong></Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
-                    <Col><strong>{ product.countInStock > 0 ? 'In Stock': 'Out of Stock'}</strong></Col>
+                    <Col><strong>{ product.data.countInStock > 0 ? 'In Stock': 'Out of Stock'}</strong></Col>
                    </Row>
                   </ListGroup.Item>
                       <ListGroup.Item>
-                    <Button className="btn-block" type="button" disabled={product.countInStock === 0}>
+                    <Button className="btn-block" type="button" disabled={product.data.countInStock === 0}>
                       Add to Cart
                  </Button>
                 </ListGroup.Item>

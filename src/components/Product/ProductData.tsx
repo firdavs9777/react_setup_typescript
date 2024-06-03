@@ -1,21 +1,36 @@
-import product1Image from '../../assets/images/airpods.jpg'
-import product2Image from '../../assets/images/alexa.jpg';
-import product3Image from '../../assets/images/camera.jpg';
-import product4Image from '../../assets/images/mouse.jpg'
-import product5Image from '../../assets/images/phone.jpg'
-import product6Image from '../../assets/images/playstation.jpg'
+// import product1Image from '../../assets/images/airpods.jpg'
+// import product2Image from '../../assets/images/alexa.jpg';
+// import product3Image from '../../assets/images/camera.jpg';
+// import product4Image from '../../assets/images/mouse.jpg'
+// import product5Image from '../../assets/images/phone.jpg'
+// import product6Image from '../../assets/images/playstation.jpg'
 
 
 export interface ProductType {
-  _id: number;
+ _id: string;
+  user: string;
   name: string;
-  description: string;
-  price: string;
-  imageUrl: string;
+  image: string; // Ensure this matches the API response
   brand: string;
-  countInStock: number;
+  category: string;
+  description: string;
   rating: number;
-  numReview: number;
+  numReviews: number;
+  price: number;
+  countInStock: number;
+  reviews: any[]; // Define this more specifically if you know the structure of reviews
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+export interface ResponseType {
+  count: number;
+  data: ProductType[];
+  message: string;
+  isLoading: boolean;
+  error: string;
 }
 
 // export const products: ProductType[] = [
