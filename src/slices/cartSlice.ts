@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import { updateCart } from "../utils/cartUtils";
 // Define the type for a cart item
 interface CartItem {
   _id: string;
   price: number;
   qty: number;
+  name: string;
+  image: string;
+  countInStock: number;
   // Add other properties as needed
 }
 
@@ -41,28 +44,10 @@ const cartSlice = createSlice({
       } else {
         state.cartItems.push(item);
       }
-
-      // Calculate item price
-      state.itemsPrice = addDecimals(
-        state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-      );
-
-      // Calculate shipping price
-      state.shippingPrice = addDecimals(Number(state.itemsPrice) > 100 ? 0 : 10);
-
-      // Calculate the tax price
-      state.taxPrice = addDecimals(Number(state.itemsPrice) * 0.15);
-
-      // Calculate total price
-      state.totalPrice = addDecimals(
-        Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)
-      );
-
-      // Store the updated state in localStorage
-      localStorage.setItem('cart', JSON.stringify(state));
+      return updateCart(state);
     },
-    removeFromCart: (state, action: PayloadAction<number>) => {
-      state.cartItems = state.cartItems.filter((_, index) => index !== action.payload);
+    removeFromCart: (state, action: PayloadAction<CartItem>) => {
+      state.cartItems = state.cartItems.filter((index) => index !== action.payload);
 
       // Recalculate prices after removing an item
       state.itemsPrice = addDecimals(
@@ -74,12 +59,17 @@ const cartSlice = createSlice({
       state.totalPrice = addDecimals(
         Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)
       );
+      state.totalPrice = (
+        Number(state.itemsPrice) +
+        Number(state.shippingPrice) +
+        Number(state.taxPrice)
+      ).toFixed(2);
 
-      // Store the updated state in localStorage
+      // Store the updated state in localStorage where we can bring the temporarily saved data
       localStorage.setItem('cart', JSON.stringify(state));
     },
   },
 });
 
 export const { addToCart, removeFromCart } = cartSlice.actions;
-export default cartSlice;
+export default cartSlice.reducer;

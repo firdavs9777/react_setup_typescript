@@ -5,7 +5,7 @@ import Rating from "../Rating/Rating";
 import { useGetProductDetailsQuery } from "../../slices/productsApiSlice";
 import Loader from "../Loader";
 import Message from "../Message";
-import { addToCart } from "../../slices/cartSlice";
+import { addToCart, removeFromCart } from "../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 export interface ProductResponseType {
@@ -50,8 +50,11 @@ const ProductScreen: React.FC = () => {
    dispatch(addToCart({
       _id: product.data._id,
       price: product.data.price,
-      qty: quantity
-    }));
+     qty: quantity,
+     name: product.data.name,
+     image: product.data.image,
+     countInStock: product.data.countInStock
+   }));
     navigate('/cart');
   }
 
