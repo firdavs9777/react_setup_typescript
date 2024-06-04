@@ -5,7 +5,19 @@ import { FaTrash } from 'react-icons/fa';
 import Message from '../Message';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { addToCart } from '../../slices/cartSlice';
+import { addToCart,removeFromCart } from '../../slices/cartSlice';
+
+
+interface CartItem {
+  _id: string;
+  price: number;
+  qty: number;
+  name: string;
+  image: string;
+  countInStock: number;
+  // Add other properties as needed
+}
+
 const MainCart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,9 +27,9 @@ const MainCart = () => {
   const addToCartHandler = (product: any, qty: any) => {
     dispatch(addToCart({ ...product, qty }));
   };
-  //   const removeFromCartHandler = (id:string) => {
-  //   dispatch(removeFromCart(id));
-  // };
+    const removeFromCartHandler = (id:string) => {
+    dispatch(removeFromCart(id));
+  };
 
     const checkoutHandler = () => {
     navigate('/login?redirect=/shipping');
@@ -50,7 +62,7 @@ const MainCart = () => {
                         addToCartHandler(item, Number(e.target.value))
                       }
                     >
-                      {[...Array(item.countInStock).keys()].map((x) => (
+                      {[...Array(item.countInStock).keys()].map((x:number) => (
                         <option key={x + 1} value={x + 1}>
                           {x + 1}
                         </option>
@@ -61,7 +73,7 @@ const MainCart = () => {
                     <Button
                       type='button'
                       variant='light'
-                      // onClick={() => removeFromCartHandler(item._id)}
+                      onClick={() => removeFromCartHandler(item._id)}
                     >
                       <FaTrash />
                     </Button>
@@ -75,16 +87,21 @@ const MainCart = () => {
       <Col md={4}>
         <Card>
           <ListGroup variant='flush'>
-            {/* <ListGroup.Item>
+            <ListGroup.Item>
               <h2>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                {/* Calculate the total items in array using reduce, 
+                acc: number, accumulation
+                item: single item,
+                acc + item.quantity will sum the total quantity of items
+                */}
+                Subtotal ({cartItems.reduce((acc:number, item:CartItem) => acc + item.qty, 0)})
                 items
               </h2>
               $
               {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .reduce((acc:number, item:CartItem) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
-            </ListGroup.Item> */}
+            </ListGroup.Item>
             <ListGroup.Item>
               <Button
                 type='button'

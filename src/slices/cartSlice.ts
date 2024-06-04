@@ -25,9 +25,7 @@ const initialState: CartState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") as string)
   : { cartItems: [], itemsPrice: '0.00', shippingPrice: '0.00', taxPrice: '0.00', totalPrice: '0.00' };
 
-const addDecimals = (num: number): string => {
-  return (Math.round(num * 100) / 100).toFixed(2);
-};
+
 
 const cartSlice = createSlice({
   name: "cart",
@@ -46,27 +44,9 @@ const cartSlice = createSlice({
       }
       return updateCart(state);
     },
-    removeFromCart: (state, action: PayloadAction<CartItem>) => {
-      state.cartItems = state.cartItems.filter((index) => index !== action.payload);
-
-      // Recalculate prices after removing an item
-      state.itemsPrice = addDecimals(
-        state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-      );
-
-      state.shippingPrice = addDecimals(Number(state.itemsPrice) > 100 ? 0 : 10);
-      state.taxPrice = addDecimals(Number(state.itemsPrice) * 0.15);
-      state.totalPrice = addDecimals(
-        Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)
-      );
-      state.totalPrice = (
-        Number(state.itemsPrice) +
-        Number(state.shippingPrice) +
-        Number(state.taxPrice)
-      ).toFixed(2);
-
-      // Store the updated state in localStorage where we can bring the temporarily saved data
-      localStorage.setItem('cart', JSON.stringify(state));
+    removeFromCart: (state, action: PayloadAction<string>) => {
+      state.cartItems = state.cartItems.filter((index) => index._id !== action.payload);
+    return (updateCart(state))
     },
   },
 });
