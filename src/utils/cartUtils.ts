@@ -17,7 +17,7 @@ interface CartItem {
 export const updateCart = (state:CartState ) => {
       // Calculate item price
       state.itemsPrice = addDecimals(
-        state.cartItems.reduce((acc:number, item: any) => acc + item.price * item.qty, 0)
+        state.cartItems.reduce((acc:number, item: CartItem) => acc + item.price * item.qty, 0)
       );
 
       // Calculate shipping price
