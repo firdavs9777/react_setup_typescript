@@ -4,6 +4,6 @@ export const ORDERS_URL = '/api/v1/users';
 export const USERS_URL = '/api/v1/orders';
 export const PAYPAL_URL = '/api/v1/paypal';
 export const LOGIN_URL = '/api/v1/users/login';
-export const REGISTER_URL = '/api/v1/users/register';
+export const REGISTER_URL = '/api/v1/users';
 export const LOGOUT_URL = '/api/v1/users/logout';
 export const USER_PROFILE_URL = '/api/v1/users/profile';

@@ -19,14 +19,14 @@ export const usersApiSlice  = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: 5
         }),
-        // registerUser: builder.query({
-        //     query: (data: AuthInfo)=> ({
-        //         url:`${REGISTER_URL}`,
-        //         method:'POST',
-        //         body: data
-        //     }),
-        //     keepUnusedDataFor: 5
-        // }),
+        registerUser: builder.mutation({
+            query: (data: AuthInfo)=> ({
+                url:`${REGISTER_URL}`,
+                method:'POST',
+                body: data
+            }),
+            keepUnusedDataFor: 5
+        }),
         // getUserProfile: builder.query({
         //     query: () => ({
         //         url: USER_PROFILE_URL,
@@ -49,4 +49,4 @@ export const usersApiSlice  = apiSlice.injectEndpoints({
         // }),
     })
 });
-export const { useLoginUserMutation,useLogoutUserMutation } = usersApiSlice;
+export const { useLoginUserMutation,useLogoutUserMutation, useRegisterUserMutation } = usersApiSlice;
