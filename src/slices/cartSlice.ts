@@ -10,22 +10,36 @@ interface CartItem {
   countInStock: number;
   // Add other properties as needed
 }
+interface ShippingAddress {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
 
 // Define the type for the state
-interface CartState {
+export interface CartState {
   cartItems: CartItem[];
   itemsPrice: string;
   shippingPrice: string;
   taxPrice: string;
   totalPrice: string;
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
 }
 
 // Get the initial state from localStorage or use a default value
 const initialState: CartState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") as string)
-  : { cartItems: [], itemsPrice: '0.00', shippingPrice: '0.00', taxPrice: '0.00', totalPrice: '0.00' };
-
-
+  : {
+      cartItems: [],
+      itemsPrice: "0.00",
+      shippingPrice: "0.00",
+      taxPrice: "0.00",
+      totalPrice: "0.00",
+      shippingAddress: [],
+      paymentMethod: "Paypal",
+    };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -34,7 +48,7 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
       const existItem = state.cartItems.find((x) => x._id === item._id);
-      
+
       if (existItem) {
         state.cartItems = state.cartItems.map((x) =>
           x._id === existItem._id ? item : x
@@ -45,11 +59,26 @@ const cartSlice = createSlice({
       return updateCart(state);
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
-      state.cartItems = state.cartItems.filter((index) => index._id !== action.payload);
-    return (updateCart(state))
+      state.cartItems = state.cartItems.filter(
+        (index) => index._id !== action.payload
+      );
+      return updateCart(state);
+    },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      return updateCart(state);
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      return updateCart(state);
     },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  savePaymentMethod,
+} = cartSlice.actions;
 export default cartSlice.reducer;
