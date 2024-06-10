@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../Auth/FormContainer";
-import { UseDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../../slices/cartSlice";
 import { useSelector } from "react-redux";
@@ -12,7 +11,7 @@ import Checkout from "./Checkout";
 const ShippingAddress = () => {
   const cart = useSelector((state: any) => state.cart);
   // Destruct ShippingAddress
-  const { shippingAddress } = cart;
+  const { shippingAddress = {} } = cart;
   const [address, setAddress] = useState(shippingAddress.address || "");
   const [city, setCity] = useState(shippingAddress.city || "");
   const [postalCode, setPostalCode] = useState(
@@ -23,6 +22,7 @@ const ShippingAddress = () => {
   const navigate = useNavigate();
 
   const submitHandler = (e: any) => {
+    e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate("/payment");
   };
