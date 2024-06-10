@@ -15,6 +15,11 @@ import { clearCartItems } from '../../slices/cartSlice';
 const PlaceOrder = () => {
   const navigate = useNavigate();
   const cart = useSelector((state: any) => state.cart);
+  const dispatch = useDispatch();
+  const [createOrder, { isLoading, error: boolean }] = useCreateOrderMutation();
+  const placeOrderHandler = () => {
+    // dispatch(createOrde)
+  }
 
   // Calculate prices and show the overall result
   // If the address is already there it will calculate the overall component cycle
@@ -98,6 +103,20 @@ const PlaceOrder = () => {
                   <Col>Tax Price: </Col>
                   <Col>${cart.shippingPrice }</Col>
                 </Row>
+              </ListGroup.Item>
+                    <ListGroup.Item>
+                <Row>
+                  <Col>Total Price: </Col>
+                  <Col>${cart.totalPrice }</Col>
+                </Row>
+              </ListGroup.Item>
+                 <ListGroup.Item>
+                {error && <Message variant='danger'>{error}</Message>}
+              </ListGroup.Item>
+                       <ListGroup.Item>
+                <Button type='button' className='btn-block' disabled={cart.cartItems.length === 0} onClick={placeOrderHandler}>
+                  Place Order
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
