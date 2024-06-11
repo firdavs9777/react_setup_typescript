@@ -5,7 +5,7 @@ import { updateCart } from "../utils/cartUtils";
 interface CartItem {
   _id: string;
   price: number;
-  qty: number;
+  quantity: number;
   name: string;
   image: string;
   countInStock: number;

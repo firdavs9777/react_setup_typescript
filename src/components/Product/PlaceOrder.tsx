@@ -16,9 +16,28 @@ const PlaceOrder = () => {
   const navigate = useNavigate();
   const cart = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
-  const [createOrder, { isLoading, error: boolean }] = useCreateOrderMutation();
-  const placeOrderHandler = () => {
-    // dispatch(createOrde)
+  const [createOrder] = useCreateOrderMutation();
+
+  // Submit Place Order Method
+  const placeOrderHandler = async () => {
+    try {
+      const res:any = await createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice, quantity: cart.quantity
+      }).unwrap();
+      if (res) {
+        dispatch(clearCartItems());
+        navigate(`/order/${res._id}`);
+      }
+
+    }
+    catch (error: any) {
+      toast.error(error);
+    }
   }
 
   // Calculate prices and show the overall result
@@ -70,13 +89,13 @@ const PlaceOrder = () => {
                         </Link>
                       </Col>
                       <Col md={4}>
-                      {item.qty} x ${item.price} = ${item.qty * item.price}
+                        {item.quantity} x ${item.price} = ${item.quantity* item.price}
                       </Col>
                     </Row>
                   ))}
                 </ListGroup>
               )}
-        
+
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -89,31 +108,31 @@ const PlaceOrder = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items: </Col>
-                  <Col>${cart.itemsPrice }</Col>
+                  <Col>${cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
-                   <ListGroup.Item>
+              <ListGroup.Item>
                 <Row>
                   <Col>Shipping: </Col>
-                  <Col>${cart.shippingPrice }</Col>
+                  <Col>${cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
-                    <ListGroup.Item>
+              <ListGroup.Item>
                 <Row>
                   <Col>Tax Price: </Col>
-                  <Col>${cart.shippingPrice }</Col>
+                  <Col>${cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
-                    <ListGroup.Item>
+              <ListGroup.Item>
                 <Row>
                   <Col>Total Price: </Col>
-                  <Col>${cart.totalPrice }</Col>
+                  <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-                 <ListGroup.Item>
-                {error && <Message variant='danger'>{error}</Message>}
-              </ListGroup.Item>
-                       <ListGroup.Item>
+              {/* <ListGroup.Item>
+                {error.mes && <Message variant='danger'>Error Occured</Message>}
+              </ListGroup.Item> */}
+              <ListGroup.Item>
                 <Button type='button' className='btn-block' disabled={cart.cartItems.length === 0} onClick={placeOrderHandler}>
                   Place Order
                 </Button>

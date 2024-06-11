@@ -29,7 +29,7 @@ const Login = () => {
       {
         navigate(redirect)
       }
-   },[userInfo,redirect,userInfo]);
+   },[userInfo,redirect,navigate]);
 
    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

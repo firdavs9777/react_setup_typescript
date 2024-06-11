@@ -4,7 +4,7 @@ import { updateCart } from "../utils/cartUtils";
 interface CartItem {
   _id: string;
   price: number;
-  qty: number;
+  quantity: number;
   name: string;
   image: string;
   countInStock: number;
@@ -73,7 +73,7 @@ const cartSlice = createSlice({
       state.paymentMethod = action.payload;
       return updateCart(state);
     },
-    clearCartItems: (state, action) => {
+    clearCartItems: (state) => {
       state.cartItems = [];
       return updateCart(state);
     }

@@ -50,7 +50,7 @@ const ProductScreen: React.FC = () => {
    dispatch(addToCart({
       _id: product.data._id,
       price: product.data.price,
-     qty: quantity,
+     quantity: quantity,
      name: product.data.name,
      image: product.data.image,
      countInStock: product.data.countInStock

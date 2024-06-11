@@ -11,7 +11,7 @@ import { addToCart,removeFromCart } from '../../slices/cartSlice';
 interface CartItem {
   _id: string;
   price: number;
-  qty: number;
+  quantity: number;
   name: string;
   image: string;
   countInStock: number;
@@ -24,8 +24,8 @@ const MainCart = () => {
   const cart = useSelector((state: any) => state.cart)
   const { cartItems } = cart;
  
-  const addToCartHandler = (product: any, qty: any) => {
-    dispatch(addToCart({ ...product, qty }));
+  const addToCartHandler = (product: any, quantity: any) => {
+    dispatch(addToCart({ ...product, quantity}));
   };
     const removeFromCartHandler = (id:string) => {
     dispatch(removeFromCart(id));
@@ -57,7 +57,7 @@ const MainCart = () => {
                   <Col md={2}>
                     <Form.Control
                       as='select'
-                      value={item.qty}
+                      value={item.quantity}
                       onChange={(e) =>
                         addToCartHandler(item, Number(e.target.value))
                       }
@@ -94,12 +94,12 @@ const MainCart = () => {
                 item: single item,
                 acc + item.quantity will sum the total quantity of items
                 */}
-                Subtotal ({cartItems.reduce((acc:number, item:CartItem) => acc + item.qty, 0)})
+                Subtotal ({cartItems.reduce((acc:number, item:CartItem) => acc + item.quantity, 0)})
                 items
               </h2>
               $
               {cartItems
-                .reduce((acc:number, item:CartItem) => acc + item.qty * item.price, 0)
+                .reduce((acc:number, item:CartItem) => acc + item.quantity * item.price, 0)
                 .toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>

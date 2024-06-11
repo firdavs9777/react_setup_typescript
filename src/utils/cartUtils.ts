@@ -11,13 +11,13 @@ interface CartState {
 interface CartItem {
   _id: string;
   price: number;
-  qty: number;
+  quantity: number;
   // Add other properties as needed
 }
 export const updateCart = (state:CartState ) => {
       // Calculate item price
       state.itemsPrice = addDecimals(
-        state.cartItems.reduce((acc:number, item: CartItem) => acc + item.price * item.qty, 0)
+        state.cartItems.reduce((acc:number, item: CartItem) => acc + item.price * item.quantity, 0)
       );
 
       // Calculate shipping price

@@ -9,11 +9,11 @@ export interface AuthInfo
     password: string;
 }
 
-export const usersApiSlice  = apiSlice.injectEndpoints({
+export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder: any)=> ({
         loginUser: builder.mutation({
-            query: (data: AuthInfo)=> ({
-                url:`${LOGIN_URL}`,
+            query: (data: AuthInfo) => ({
+                url: `${LOGIN_URL}`,
                 method: 'POST',
                 body: data
             }),
@@ -47,6 +47,7 @@ export const usersApiSlice  = apiSlice.injectEndpoints({
         //     }),
         //     keepUnusedDataFor: 5
         // }),
-    })
+    }),
+
 });
 export const { useLoginUserMutation,useLogoutUserMutation, useRegisterUserMutation } = usersApiSlice;
