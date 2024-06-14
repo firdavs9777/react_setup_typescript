@@ -31,7 +31,6 @@ export interface UserType {
     data?: UserType,
     token: string,
     message:string
-
   }
   
 

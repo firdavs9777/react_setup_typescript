@@ -20,6 +20,7 @@ const PlaceOrder = () => {
 
   // Submit Place Order Method
   const placeOrderHandler = async () => {
+    console.log(cart.cartItems);
     try {
       const res:any = await createOrder({
         orderItems: cart.cartItems,
