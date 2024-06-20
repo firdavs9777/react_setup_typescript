@@ -10,6 +10,7 @@ import router from './router/router';
 import { RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './store';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={rootReducer}>
+      <PayPalScriptProvider deferLoading={true} options={{ clientId: "test" }}>
       <RouterProvider router={router}/>
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );

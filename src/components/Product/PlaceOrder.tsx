@@ -130,6 +130,7 @@ const PlaceOrder = () => {
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              
               {/* <ListGroup.Item>
                 {error.mes && <Message variant='danger'>Error Occured</Message>}
               </ListGroup.Item> */}
