@@ -62,7 +62,7 @@ interface Order {
 //   | { type: DISPATCH_ACTION.SET_LOADING_STATUS; value: SCRIPT_LOADING_STATE };
 
 const OrderScreen: React.FC = () => {
-  const { id: orderId } = useParams<{ id: string }>();
+   const { id: orderId } = useParams<{ id: string }>();
   const { data: orderData, refetch, isLoading, isError, error } = useGetOrderDetailsQuery(orderId);
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -80,8 +80,8 @@ const OrderScreen: React.FC = () => {
         paypalDispatch({
           type: DISPATCH_ACTION.RESET_OPTIONS,
           value: {
-            clientId: (paypalData as any).clientId,
-            currency_code: currency,
+            'clientId': (paypalData as any).clientId,
+            currency: currency,
           },
         });
         paypalDispatch({
@@ -90,7 +90,9 @@ const OrderScreen: React.FC = () => {
         });
       };
       if (order && !order.isPaid) {
-        loadPayPalScript();
+          if (!window.paypal) {
+          loadPayPalScript();
+        }
       }
     }
   }, [order, paypalData, paypalDispatch, loadingPayPal, errorPayPal]);
@@ -106,12 +108,12 @@ const OrderScreen: React.FC = () => {
         },
       ],
     }).then((orderId: string) => {
-      return orderId
+      return orderId;
     });
   };
 
   const onApprove = async (data: any, actions: OnApproveBraintreeActions) => {
-    return actions.order?.capture().then(async function (details) {
+    return actions.order?.capture().then(async function (details: any) {
       try {
         await payOrder({ orderId, details });
         refetch();
@@ -126,9 +128,8 @@ const OrderScreen: React.FC = () => {
 
 
   const onApproveTest = async () => {
-    console.log(orderId);
-    console.log(await payOrder({ orderId, details: { payer: {} } }));
-    await payOrder({ orderId, details: { payer: {} } });
+    const response = await payOrder({ orderId, details: { payer: {} } }).unwrap();
+    console.log(response);
     console.log(await payOrder({ orderId, details: { payer: {} } }));
     refetch();
     toast.success('Payment successful');

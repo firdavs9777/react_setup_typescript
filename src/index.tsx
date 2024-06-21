@@ -18,9 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={rootReducer}>
-      <PayPalScriptProvider deferLoading={true} options={{ clientId: "test" }}>
-      <RouterProvider router={router}/>
-      </PayPalScriptProvider>
+      <PayPalScriptProvider deferLoading={false} options={{ clientId: "AQ64Bsbd6NGa7eos3hUpqBmfSifGuJmzbMUtsB2FtEwddpr5QXNQ8S7tc5NAVybj0JVQRH1GFXQViQ_u" }}>
+      <RouterProvider router={router} />
+    </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );
