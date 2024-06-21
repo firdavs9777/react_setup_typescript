@@ -23,21 +23,7 @@ interface ShippingAddress {
   postalCode: string;
   country: string;
 }
-
-// enum SCRIPT_LOADING_STATE {
-//   PENDING = 'pending',
-//   RESOLVED = 'resolved',
-//   REJECTED = 'rejected',
-// }
-
-// enum DISPATCH_ACTION {
-//   RESET_OPTIONS = 'resetOptions',
-//   SET_LOADING_STATUS = 'setLoadingStatus',
-// }
-
-// type PayPalDispatch = (action: { type: DISPATCH_ACTION; value?: any }) => void;
-
-interface Order {
+export interface Order {
   _id: string;
   orderItems: OrderItem[];
   shippingAddress: ShippingAddress;

@@ -28,9 +28,13 @@ export interface UserType {
   export interface Response 
   {
     name?: string,
+    _id?: string,
+    email?: string,
+    password?: string,
     data?: UserType,
-    token: string,
-    message:string
+    isAdmin?: boolean,
+    token?: string,
+    message?:string
   }
   
 
