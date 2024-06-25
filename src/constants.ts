@@ -7,3 +7,4 @@ export const LOGIN_URL = '/api/v1/users/login';
 export const REGISTER_URL = '/api/v1/users';
 export const LOGOUT_URL = '/api/v1/users/logout';
 export const USER_PROFILE_URL = '/api/v1/users/profile';
+export const UPLOADS_URL = '/api/v1/upload';

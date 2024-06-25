@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import Message from '../Message';
 import Loader from '../Loader';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalCliendIdQuery } from '../../slices/orderApiSlice';
+import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalCliendIdQuery, useDeliverOrderMutation } from '../../slices/orderApiSlice';
 import { PayPalButtons, usePayPalScriptReducer, DISPATCH_ACTION, SCRIPT_LOADING_STATE, CreateOrderBraintreeActions, OnApproveBraintreeData, OnApproveBraintreeActions } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -48,15 +48,19 @@ export interface Order {
 //   | { type: DISPATCH_ACTION.SET_LOADING_STATUS; value: SCRIPT_LOADING_STATE };
 
 const OrderScreen: React.FC = () => {
-   const { id: orderId } = useParams<{ id: string }>();
+  const { id: orderId } = useParams<{ id: string }>();
   const { data: orderData, refetch, isLoading, isError, error } = useGetOrderDetailsQuery(orderId);
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
+
+
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { userInfo } = useSelector((state: any) => state.auth);
 
   const { data: paypalData, isLoading: loadingPayPal, error: errorPayPal } = useGetPayPalCliendIdQuery(orderId);
 
   const order: Order = orderData as Order;
+  console.log(order);
 
 
   useEffect(() => {
@@ -76,7 +80,7 @@ const OrderScreen: React.FC = () => {
         });
       };
       if (order && !order.isPaid) {
-          if (!window.paypal) {
+        if (!window.paypal) {
           loadPayPalScript();
         }
       }
@@ -120,6 +124,17 @@ const OrderScreen: React.FC = () => {
     refetch();
     toast.success('Payment successful');
   }
+
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order delivered");
+    }
+    catch (err) {
+      toast.error('Error occured')
+    }
+ }
   const onError = (err: any) => {
     // Implement onError function for PayPalButtons
     toast.error(err.message);
@@ -156,9 +171,10 @@ const OrderScreen: React.FC = () => {
                     {order.shippingAddress.postalCode}, {order.shippingAddress.country}
                   </p>
                   {order.isDelivered ? (
+                    // <p>{order.isDelivered.toString()}</p>
                     <Message variant="success">Delivered on {order.deliveredAt}</Message>
                   ) : (
-                    <Message variant="danger">Not Delivered</Message>
+                    <Message variant="danger">Not Delivered </Message>
                   )}
                 </ListGroup.Item>
 
@@ -250,6 +266,20 @@ const OrderScreen: React.FC = () => {
                           </div>
                         </>
                       )}
+                    </ListGroup.Item>
+                  )}
+                  {
+                    loadingDeliver && <Loader />
+                  }
+                  {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                    <ListGroup.Item>
+                      <Button
+                        type='button'
+                        className='btn btn-block'
+                        onClick={deliverOrderHandler}
+                      >
+                        Mark as Delivered
+                      </Button>
                     </ListGroup.Item>
                   )}
                 </ListGroup>

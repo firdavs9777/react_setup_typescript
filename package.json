@@ -1,7 +1,7 @@
 {
   "name": "test",
   "version": "0.1.0",
-  "proxy": "http://localhost:5004",
+  "proxy": "http://localhost:5005",
   "private": true,
   "dependencies": {
     "@paypal/react-paypal-js": "^8.5.0",

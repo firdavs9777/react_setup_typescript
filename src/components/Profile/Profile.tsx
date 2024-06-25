@@ -10,8 +10,43 @@ import { useEffect, useState } from 'react';
 import { Response } from '../../slices/authSlice';
 import { useGetMyOrdersQuery } from '../../slices/orderApiSlice';
 import { FaTimes } from 'react-icons/fa';
-import { Order } from '../Product/OrderScreen';
+// import { Order } from '../Product/OrderScreen';
 
+
+
+interface ShippingAddress {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+interface OrderItem {
+  name: string;
+  quantity: number;
+  image: string;
+  price: number;
+  product: string;
+  _id: string;
+}
+
+interface Order {
+  _id: string;
+  user: string;
+  shippingAddress: ShippingAddress;
+  orderItems: OrderItem[];
+  paymentMethod: string;
+  itemsPrice: number;
+  taxPrice: number;
+  shippingPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  isDelivered: boolean;
+  createdAt: string;
+  updatedAt: string;
+  paidAt: string;
+  __v: number;
+}
 
 const ProfileScreen = () => {
 
@@ -107,7 +142,7 @@ const ProfileScreen = () => {
             <Loader />
           ) :
             (
-              <Table striped hover responsive className='table-sm'>
+              <Table striped hover responsive variant='light' className='table-sm'>
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -118,43 +153,42 @@ const ProfileScreen = () => {
                     <th></th>
                   </tr>
                 </thead>
-                 <tbody>
-              {orders ? (
-                
-                  <tr key={orders._id}>
-                    <td>{orders._id}</td>
-                    <td>{orders.createdAt.substring(0, 10)}</td>
-                    <td>{orders.totalPrice}</td>
-                    <td>
-                     {orders.isPaid && orders.paidAt ? (
-                       orders.paidAt.substring(0, 10)
-                      ) : (
-                        <FaTimes style={{ color: 'red' }} />
-                        )
-                        }
-                    </td>
-                     <td>
-                      {orders.isDelivered && orders.deliveredAt ? (
-                        orders.deliveredAt.substring(0, 10)
-                      ) : (
-                        <FaTimes style={{ color: 'red' }} />
-                      )}
-                    </td>
-                    <td>
-                      <LinkContainer to={`/order/${orders._id}`}>
-                        <Button className='btn-sm' variant='light'>
-                          Details
-                        </Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
-             
-              ) : (
-                <tr>
-                  <td>No orders found</td>
-                </tr>
-              )}
-            </tbody>
+         <tbody>
+  {orders && Array.isArray(orders)  ? (
+    orders.map((order: Order) => (
+      <tr key={order._id}>
+        <td>{order._id}</td>
+        <td>{order.createdAt.substring(0, 10)}</td>
+        <td>{order.totalPrice}</td>
+        <td>
+          {order.isPaid && order.paidAt ? (
+            order.paidAt.substring(0, 10)
+          ) : (
+            <FaTimes style={{ color: 'red' }} />
+          )}
+        </td>
+        {/* <td>
+          {order.isDelivered && order.deliveredAt ? (
+            order.deliveredAt.substring(0, 10)
+          ) : (
+            <FaTimes style={{ color: 'red' }} />
+          )}
+        </td> */}
+        <td>
+          <LinkContainer to={`/order/${order._id}`}>
+            <Button className='btn-sm' variant='light'>
+              Details
+            </Button>
+          </LinkContainer>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>No orders found</td>
+    </tr>
+  )}
+</tbody>
               </Table>
             )
 

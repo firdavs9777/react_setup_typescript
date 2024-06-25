@@ -15,6 +15,10 @@ import Payment from "../components/Product/Payment";
 import PlaceOrder from "../components/Product/PlaceOrder";
 import OrderScreen from "../components/Product/OrderScreen";
 import ProfileScreen from "../components/Profile/Profile";
+import AdminRoute from "./AdminRoute";
+import OrderListScreen from "../components/AdminPages/OrderListScreen";
+import ProductListScreen from "../components/AdminPages/ProductListScreen";
+import ProductEditScreen from "../components/AdminPages/ProductEditScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +35,12 @@ const router = createBrowserRouter(
         <Route index={true} path="/placeorder" element={<PlaceOrder />} />
         <Route index={true} path="/order/:id" element={<OrderScreen />} />
          <Route index={true} path="/profile" element={<ProfileScreen />} />
+      </Route>
+      {/* Only admin can access here */}
+      <Route path="" element={<AdminRoute />}>
+        <Route index={true} path="/admin/orderList" element={<OrderListScreen />} />
+        <Route index={true} path="/admin/productList" element={<ProductListScreen />} />  
+        <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>} />
       </Route>
     </Route>
   )
