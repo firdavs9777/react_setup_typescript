@@ -75,28 +75,26 @@ const ProductEditScreen: React.FC = () => {
 //   message: string;
 //   image: string;
 // }
-  const uploadFileHandler = async  (e: React.ChangeEvent<HTMLInputElement>) => {
-   e.preventDefault();
-    if (e.target.files && e.target.files.length > 0) {   
-     const formData = new FormData();
-     const selectedFile = e.target.files[0];
-     console.log('Selected File ', selectedFile);
-      formData.append('image', selectedFile);     
+  const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const formData = new FormData();
+      const selectedFile = e.target.files[0];
+      formData.append('image', selectedFile);
       try {
-      const res = await uploadProductImage(formData).unwrap();
-     console.log(res);
+        await uploadProductImage(formData);
+        // setImage(res?.image); // Assuming the response includes the updated image URL
+        toast.success('Image uploaded successfully');
+      } catch (error: any) {
+        console.error('Upload error:', error);
+        toast.error('Failed to upload image');
       }
-      catch (error: any) {
-         console.error('Upload error:', error);
-      }
-      
-
-      
-      
-      // Add your file upload logic here, e.g., sending the file to the server
     }
-
-}
+    else 
+    {
+      console.log('erro')
+      }
+  };
 
   return (
     <>
@@ -196,7 +194,8 @@ const ProductEditScreen: React.FC = () => {
         </Form>
       )}
     </>
-  );
-};
+);
+
+}
 
 export default ProductEditScreen;
