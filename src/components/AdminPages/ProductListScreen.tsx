@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 import Message from '../Message';
 import Loader from '../Loader';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice';
+import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice';
 import { ProductType, ResponseType } from '../Product/ProductData';
 import { toast } from 'react-toastify';
 
 const ProductListScreen: React.FC = () => {
   const { data, isLoading, error,refetch } = useGetProductsQuery({});
-  const [createProduct,  { isLoading: productLoading }] = useCreateProductMutation();
+  const [createProduct, { isLoading: productLoading }] = useCreateProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
+
 
   const products = data as ResponseType;
 
@@ -18,6 +20,18 @@ const ProductListScreen: React.FC = () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
       try {
         await createProduct({});
+        refetch();
+      }
+      catch(error: any) {
+        toast.error(error);
+      }
+   }
+  }
+
+  const deleteHandler = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete the product?')) {
+      try {
+        await deleteProduct(id);
         refetch();
       }
       catch(error: any) {
@@ -67,7 +81,7 @@ const ProductListScreen: React.FC = () => {
                       <FaEdit />
                     </Button>
                   </LinkContainer>
-                  <Button variant='danger' className='btn-sm'>
+                  <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(product._id)}>
                     <FaTrash />
                   </Button>
                 </td>
