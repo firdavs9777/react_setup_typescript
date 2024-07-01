@@ -20,12 +20,11 @@ const ProductEditScreen: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, isLoading, error, refetch } = useGetProductDetailsQuery(ProductId);
-  const response = data as ResponseType;
-  const product = response?.data as ProductType;  
+  const product = data as ResponseType;
 
   const [updateProduct, { isLoading: loadingUpdate }] = useUpdateProductMutation();
   // Upload Image apislice
-  const [uploadProductImage, {isLoading: loadingUpload}] = useUpdateProductMutation();
+  const [uploadProductImage, {isLoading: loadingUpload}] = useUploadProductImageMutation();
 
 
   const [name, setName] = useState('');
@@ -37,16 +36,17 @@ const ProductEditScreen: React.FC = () => {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
+    refetch();
     if (product) {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
+      setName(product.data.name);
+      setPrice(product.data.price);
+      setImage(product.data.image);
+      setBrand(product.data.brand);
+      setCategory(product.data.category);
+      setCountInStock(product.data.countInStock);
+      setDescription(product.data.description);
     }
-  }, [product]);
+  }, [product, refetch]);
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +62,6 @@ const ProductEditScreen: React.FC = () => {
         countInStock,
         description,
       };
-      const id = ProductId;
       const result = await updateProduct(updatedProduct).unwrap();
       console.log(result);
       toast.success('Product updated successfully');
@@ -76,18 +75,27 @@ const ProductEditScreen: React.FC = () => {
 //   image: string;
 // }
   const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    console.log(e.target.files);
     e.preventDefault();
     if (e.target.files && e.target.files.length > 0) {
       const formData = new FormData();
       const selectedFile = e.target.files[0];
+      console.log('Selected File', selectedFile);
       formData.append('image', selectedFile);
+      console.log('FormData', formData);
       try {
-        await uploadProductImage(formData);
-        // setImage(res?.image); // Assuming the response includes the updated image URL
+        const response = await uploadProductImage(formData).unwrap();
+        if (response)
+        {
+
+        toast.success('good')          
+        }
+        // setImage(response.data); // Assuming the response includes the updated image URL
         toast.success('Image uploaded successfully');
       } catch (error: any) {
-        console.error('Upload error:', error);
-        toast.error('Failed to upload image');
+        console.log(error);
+        toast.error(error.toString());
       }
     }
     else 
