@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import OrderListScreen from "../components/AdminPages/OrderListScreen";
 import ProductListScreen from "../components/AdminPages/ProductListScreen";
 import ProductEditScreen from "../components/AdminPages/ProductEditScreen";
+import UserListScreen from "../components/AdminPages/UserListScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +40,8 @@ const router = createBrowserRouter(
       {/* Only admin can access here */}
       <Route path="" element={<AdminRoute />}>
         <Route index={true} path="/admin/orderList" element={<OrderListScreen />} />
-        <Route index={true} path="/admin/productList" element={<ProductListScreen />} />  
+        <Route index={true} path="/admin/productList" element={<ProductListScreen />} />
+        <Route index={true} path="/admin/userList" element={<UserListScreen />} /> 
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>} />
       </Route>
     </Route>
