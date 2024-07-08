@@ -21,6 +21,7 @@ import ProductListScreen from "../components/AdminPages/ProductListScreen";
 import ProductEditScreen from "../components/AdminPages/ProductEditScreen";
 import UserListScreen from "../components/AdminPages/UserListScreen";
 import LotteryCalculator from "../components/AdminPages/LotteryCalculator";
+import UserEditScren from "../components/AdminPages/UserEditScren";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,7 +45,8 @@ const router = createBrowserRouter(
         <Route index={true} path="/admin/productList" element={<ProductListScreen />} />
         <Route index={true} path="/admin/userList" element={<UserListScreen />} /> 
          <Route index={true} path="/lotto" element={<LotteryCalculator />} /> 
-        <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>} />
+        <Route path='/admin/product/:id/edit' element={<ProductEditScreen />} />
+        <Route path='/admin/user/:id/edit' element={<UserEditScren/>} />
       </Route>
     </Route>
   )

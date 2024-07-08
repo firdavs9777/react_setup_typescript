@@ -18,7 +18,7 @@ export interface UserType {
     name: string,
     email: string,
     password: string,
-    isAdmin?: boolean,
+    isAdmin: boolean,
     __v?: number,
     createdAt?: string,
     updatedAt?: string,

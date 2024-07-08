@@ -1,5 +1,6 @@
 import { USER_PROFILE_URL, LOGOUT_URL, REGISTER_URL, LOGIN_URL, USERS_URL } from '../constants';
 import { apiSlice } from "./apiSlice";
+import { UserType } from './authSlice';
 
 
 export interface AuthInfo {
@@ -48,13 +49,28 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             providesTags: ['User'],
             keepUnusedDataFor: 5,
         }),
-        // updateUser: builder.query({
-        //     query: (productId: string)=> ({
-        //         url:`${PRODUCTS_URL}/${productId}`
-        //     }),
-        //     keepUnusedDataFor: 5
-        // }),
+        deleteUser: builder.mutation({
+            query: (userId: string) => ({
+                url: `${USERS_URL}/${userId}`,
+                method: 'DELETE',
+            }),
+        }),
+        getUserDetails: builder.query({
+            query: (userId: string) => ({
+                url: `${USERS_URL}/${userId}`
+            }),
+            keepUnusedDataFor: 5
+        }),
+        updateUser: builder.mutation({
+            query: (data: UserType) => ({
+                url: `${USERS_URL}/${data._id}`,
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 
 });
-export const { useLoginUserMutation, useLogoutUserMutation, useRegisterUserMutation, useProfileMutation, useGetUsersQuery,  } = usersApiSlice;
+export const { useLoginUserMutation, useLogoutUserMutation, useRegisterUserMutation, useProfileMutation, useGetUsersQuery, useDeleteUserMutation, useGetUserDetailsQuery, useUpdateUserMutation
+} = usersApiSlice;
