@@ -10,19 +10,17 @@ import { useGetUserDetailsQuery, useUpdateUserMutation } from '../../slices/user
 import { UserType } from '../../slices/authSlice';
 
 
-export interface ResponseType {
-  data: UserType;
-  message: string;
-}
 
 const UserEditScreen: React.FC = () => {
   const { id: userId } = useParams();
   const UserId = (userId as string);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, isLoading, error, refetch } = useGetUserDetailsQuery(UserId);
-  const user = data as ResponseType;
 
+  const { data, isLoading, error, refetch } = useGetUserDetailsQuery(UserId);
+  console.log(data);
+  const user = data as UserType;
+  console.log('User', user);
   const [updateUser, { isLoading: loadingUpdate }] = useUpdateUserMutation();
 
 
@@ -34,19 +32,18 @@ const UserEditScreen: React.FC = () => {
   useEffect(() => {
     refetch();
     if (user) {
-      setName(user.data.name);
-      setEmail(user.data.email);
-      setIsAdmin(user.data.isAdmin);
+      setName(user.name);
+      setEmail(user.email);
+      setIsAdmin(user.isAdmin);
     }
   }, [user, refetch]);
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const  updatedUser = {
+      const updatedUser = {
         _id: UserId,
-email, isAdmin
-        
+        email, isAdmin, name
       };
       const result = await updateUser(updatedUser).unwrap();
       console.log(result);
@@ -56,10 +53,10 @@ email, isAdmin
       toast.error(error.toString());
     }
   };
-// interface UploadResponse {
-//   message: string;
-//   image: string;
-// }
+  // interface UploadResponse {
+  //   message: string;
+  //   image: string;
+  // }
 
 
   return (
@@ -84,8 +81,8 @@ email, isAdmin
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
-
-    <Form.Group controlId='email'>
+              <p>{ name }</p>
+          <Form.Group controlId='email'>
             <Form.Label>Email</Form.Label>
             <Form.Control
               type='text'
@@ -95,15 +92,15 @@ email, isAdmin
             ></Form.Control>
           </Form.Group>
 
- 
-    <Form.Group controlId='isAdmin'>
+
+          <Form.Group controlId='isAdmin'>
             <Form.Label>IsAdmin</Form.Label>
-                <Form.Check
-                  type='checkbox'
-                  label='Is Admin'
-                  checked={isAdmin}
-                  onChange={(e) => setIsAdmin(e.target.checked)}
-                >
+            <Form.Check
+              type='checkbox'
+              label='Is Admin'
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+            >
             </Form.Check>
           </Form.Group>
           <Button type='submit' variant='primary' className='mt-3'>
@@ -112,7 +109,7 @@ email, isAdmin
         </Form>
       )}
     </>
-);
+  );
 
 }
 
