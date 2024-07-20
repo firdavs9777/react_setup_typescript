@@ -1,5 +1,4 @@
-import { ActionType } from '../../actions/auth/authActions';
-
+import { ActionType } from "../../actions/auth/authActions";
 
 export interface AuthState {
   login_check: boolean;
@@ -14,9 +13,9 @@ export const counterReducer = (
   action: ActionType
 ): AuthState => {
   switch (action.type) {
-    case 'LOGIN':
+    case "LOGIN":
       return { ...state, login_check: !state.login_check };
-    case 'REGISTER':
+    case "REGISTER":
       return { ...state, login_check: !state.login_check };
     default:
       return state;
